@@ -3,12 +3,7 @@ import hashlib
 import time
 
 def uint8(n):
-    u8 = 0
-    for i in range(n):
-        u8 += 1
-        if u8 == 256:
-            u8 = 0
-    return u8
+    return n - 256*int(n/256)
 
 def s(e):
     n = len(e)
@@ -17,12 +12,9 @@ def s(e):
 
 def score(e):
     t = 0
-    n = 15
-    while True:
+    for i in range(16):
+        n = 15 - i
         t += 256 ** (16 - (n + 1)) * uint8(e[n])
-        n -= 1
-        if not n >= 0:
-            break
     return t
 
 def stepped_generate_work(salt, string, difficulty_factor):
